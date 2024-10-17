@@ -1,0 +1,97 @@
+﻿@using System.Web.Mvc
+@using System.Web.Mvc.Html
+@using RedditWebRole.Models
+
+@model LoginViewModel
+
+<style>
+    /* Custom CSS */
+    .navbar {
+        background-color: #1a202c;
+        color: #ffffff;
+        padding: 1rem;
+    }
+
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            margin-right: 1rem;
+        }
+
+    .container {
+        max-width: 600px; /* Adjust the max width for the login form */
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .form-label {
+        color: #2d3748;
+        font-weight: bold;
+        display: block;
+        text-align: center; /* Center the labels */
+    }
+
+    .form-control {
+        padding: 0.5rem;
+        border: 1px solid #cbd5e0;
+        border-radius: 0.25rem;
+        width: 100%;
+        margin: 0 auto 1rem; /* Center the input fields */
+    }
+
+    .btn {
+        padding: 0.5rem 1rem;
+        background-color: #4a90e2;
+        color: #ffffff;
+        border: none;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 100%;
+        display: block;
+        text-align: center;
+    }
+
+        .btn:hover {
+            background-color: #3182ce;
+        }
+
+    .form-container {
+        background-color: #ffffff;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        padding: 2rem;
+        text-align: center; /* Center the form container */
+    }
+
+    .centriranje {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+    }
+    #Email, #Password {
+        text-align: center;
+    }
+</style>
+
+<div class="container centriranje">
+    <br />
+    <div class="form-container ">
+        <h1 class="text-center mb-4">Login</h1>
+        <form action="@Url.Action("Login", "LoginRegister")" method="post" class="mt-5">
+            @Html.AntiForgeryToken()
+
+            <div class="mb-4">
+                <h2 for="Email" class="form-label fs-5">Email</h2>
+                <input type="email" id="Email" name="Email" class="form-control fs-5" style="width: 300px; text-align: center;" />
+            </div>
+            <div class="mb-4">
+                <h2 for="Password" class="form-label fs-5">Password</h2>
+                <input type="password" id="Password" name="Password" class="form-control fs-1" style="width: 300px; text-align: center;" />
+            </div>
+            <button type="submit" class="btn btn-primary fs-5">Prijavi se</button>
+        </form>
+
+
+    </div>
+</div>

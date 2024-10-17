@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="Reddit" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="6" osVersion="*" schemaVersion="2015-04.2.6">
+  <Role name="HealtStatusWebRole">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="HealthCheckDataConnectionString" value="UseDevelopmentStorage=true" />
+    </ConfigurationSettings>
+  </Role>
+  <Role name="RedditWebRole">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="UserDataConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="PostDataConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="CommentDataConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="SubscriptionDataConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="NotificationDataConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="PostReactionsDataConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="CommentReactionsDataConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="PostImageBlobConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="UserImageBlobConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="QueueDataConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="SentMailDataConnectionString" value="UseDevelopmentStorage=true" />
+    </ConfigurationSettings>
+  </Role>
+  <Role name="NotificationWorkerRole">
+    <Instances count="3" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="NotificationDataConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="CommentDataConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="QueueDataConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="PostDataConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="UserDataConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="SentMailDataConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="AdminQueueDataConnectionString" value="UseDevelopmentStorage=true" />
+    </ConfigurationSettings>
+  </Role>
+  <Role name="HealthMonitoringWorkerRole">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="HealthCheckDataConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="AdminQueueDataConnectionString" value="UseDevelopmentStorage=true" />
+    </ConfigurationSettings>
+  </Role>
+</ServiceConfiguration>

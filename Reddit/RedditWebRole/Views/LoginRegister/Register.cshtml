@@ -1,0 +1,142 @@
+﻿@using System.Web.Mvc
+@using System.Web.Mvc.Html
+@using RedditWebRole.Models
+
+@model RegisterViewModel
+
+@Layout
+
+<style>
+    /* Custom CSS */
+    .navbar {
+        background-color: #1a202c;
+        color: #ffffff;
+        padding: 1rem;
+    }
+
+    .navbar a {
+        color: #ffffff;
+        text-decoration: none;
+        margin-right: 1rem;
+    }
+
+    .container {
+        max-width: 600px; /* Adjust the max width for the register form */
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .form-label {
+        color: #2d3748;
+        font-weight: bold;
+    }
+
+    .form-control {
+        padding: 0.5rem;
+        border: 1px solid #cbd5e0;
+        border-radius: 0.25rem;
+        width: 100%;
+    }
+
+    .form-control-file {
+        padding: 0.5rem;
+        border: 1px solid #cbd5e0;
+        border-radius: 0.25rem;
+        width: 100%;
+    }
+
+    .btn {
+        padding: 0.5rem 1rem;
+        background-color: #4a90e2;
+        color: #ffffff;
+        border: none;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn:hover {
+            background-color: #3182ce;
+        }
+
+    .form-container {
+        background-color: #ffffff;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .form-group {
+        width: 100%; /* Ensure the form group takes full width */
+        margin-bottom: 1rem;
+    }
+    .centriranje {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+    }
+</style>
+
+<div class="container">
+    <br />
+    <div class="form-container centriranje">
+        <h2 class="text-center mb-4">Create Account</h2>
+        <form action="@Url.Action("Register", "LoginRegister")" method="post" enctype="multipart/form-data">
+
+            <div class="form-group">
+                <label for="Username" class="form-label">Username (Email)</label>
+                <input type="email" id="Username" name="Username" class="form-control" placeholder="Enter your username (email)" />
+            </div>
+
+            <div class="form-group">
+                <label for="FirstName" class="form-label">First Name</label>
+                <input type="text" id="FirstName" name="FirstName" class="form-control" placeholder="Enter your first name" />
+            </div>
+
+            <div class="form-group">
+                <label for="LastName" class="form-label">Last Name</label>
+                <input type="text" id="LastName" name="LastName" class="form-control" placeholder="Enter your last name" />
+            </div>
+
+            <div class="form-group">
+                <label for="Address" class="form-label">Address</label>
+                <input type="text" id="Address" name="Address" class="form-control" placeholder="Enter your address" />
+            </div>
+
+            <div class="form-group">
+                <label for="City" class="form-label">City</label>
+                <input type="text" id="City" name="City" class="form-control" placeholder="Enter your city" />
+            </div>
+
+            <div class="form-group">
+                <label for="Country" class="form-label">Country</label>
+                <input type="text" id="Country" name="Country" class="form-control" placeholder="Enter your country" />
+            </div>
+
+            <div class="form-group">
+                <label for="PhoneNumber" class="form-label">Phone Number</label>
+                <input type="text" id="PhoneNumber" name="PhoneNumber" class="form-control" placeholder="Enter your phone number" />
+            </div>
+
+            <div class="form-group">
+                <label for="Email" class="form-label">Email</label>
+                <input type="email" id="Email" name="Email" class="form-control" placeholder="Enter your email" />
+            </div>
+
+            <div class="form-group">
+                <label for="Password" class="form-label">Password</label>
+                <input type="password" id="Password" name="Password" class="form-control" placeholder="Create a password" />
+            </div>
+
+            <div class="form-group">
+                <label for="ImageFile" class="form-label">Profile Image</label>
+                <input type="file" id="ImageFile" name="ImageFile" class="form-control-file" />
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,138 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="container">
+    <h1 class="text-center mt-5">Health Status</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card bg-light mb-3 shadow-sm">
+                <div class="card-header text-white bg-info"><b>Reddit Service</b></div>
+                <div class="card-body">
+                    <h5 class="card-title">Uptime Last Hour</h5>
+                    <p class="card-text text-info">
+                        @ViewBag.RedditServiceLastHourUptime.ToString("F2")%
+                    </p>
+                    <h5 class="card-title">Uptime Last 24 Hours</h5>
+                    <p class="card-text text-info">
+                        @ViewBag.RedditServiceLast24HoursUptime.ToString("F2")%
+                    </p>
+                    <h2><b>Visual representation of uptime in the last 24 hours</b></h2>
+                    <div class="uptime-graph">
+                        @foreach (var check in ViewBag.RedditServiceLast24HoursChecks)
+                        {
+                            <span class="uptime-bar @(check.Status == "OK" ? "bg-success" : "bg-danger")" title="@(check.CheckedAt.ToString("HH:mm"))"></span>
+                        }
+                    </div>
+                    <div class="legend mt-3">
+                        <span class="uptime-bar bg-success"></span> Operational
+                        <span class="uptime-bar bg-danger"></span> Downtime
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card bg-light mb-3 shadow-sm">
+                <div class="card-header text-white bg-success"><b>Notification Service</b></div>
+                <div class="card-body">
+                    <h5 class="card-title">Uptime Last Hour</h5>
+                    <p class="card-text text-success">
+                        @ViewBag.NotificationServiceLastHourUptime.ToString("F2")%
+                    </p>
+                    <h5 class="card-title">Uptime Last 24 Hours</h5>
+                    <p class="card-text text-success">
+                        @ViewBag.NotificationServiceLast24HoursUptime.ToString("F2")%
+                    </p>
+                    <h2><b>Visual representation of uptime in the last 24 hours</b></h2>
+                    <div class="uptime-graph">
+                        @foreach (var check in ViewBag.NotificationServiceLast24HoursChecks)
+                        {
+                            <span class="uptime-bar @(check.Status == "OK" ? "bg-success" : "bg-danger")" title="@(check.CheckedAt.ToString("HH:mm"))"></span>
+                        }
+                    </div>
+                    <div class="legend mt-3">
+                        <span class="uptime-bar bg-success"></span> Operational
+                        <span class="uptime-bar bg-danger"></span> Downtime
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" />
+<script>
+    // Refresh the page every 5 seconds
+    setInterval(function () {
+        location.reload();
+    }, 5000); // 5000 milliseconds = 5 seconds
+</script>
+
+<style>
+    .card {
+        border-radius: 15px;
+        margin-bottom: 1.5rem;
+    }
+
+    .card-header {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .card-body {
+        text-align: center;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .card-text {
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    .uptime-graph {
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        flex-direction: row-reverse;
+    }
+
+    .uptime-bar {
+        width: 1%;
+        height: 20px;
+        margin: 1px;
+        border-radius: 3px;
+        flex-shrink: 0;
+    }
+
+    .legend {
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    .bg-success {
+        background-color: #28a745 !important;
+    }
+
+    .bg-danger {
+        background-color: #dc3545 !important;
+    }
+
+    .bg-info {
+        background-color: #17a2b8 !important;
+    }
+
+ 
+        .col-md-6 {
+            min-width: 100%;
+        }
+   
+</style>

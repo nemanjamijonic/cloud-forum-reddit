@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="Reddit" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2015-04.2.6">
+  <WebRole name="HealtStatusWebRole" vmsize="Standard_D1_v2">
+    <Sites>
+      <Site name="Web">
+        <Bindings>
+          <Binding name="Endpoint1" endpointName="Endpoint1" />
+        </Bindings>
+      </Site>
+    </Sites>
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+      <Setting name="HealthCheckDataConnectionString" />
+    </ConfigurationSettings>
+    <Endpoints>
+      <InputEndpoint name="Endpoint1" protocol="http" port="80" />
+    </Endpoints>
+  </WebRole>
+  <WebRole name="RedditWebRole" vmsize="Standard_D1_v2">
+    <Sites>
+      <Site name="Web">
+        <Bindings>
+          <Binding name="Endpoint1" endpointName="Endpoint1" />
+        </Bindings>
+      </Site>
+    </Sites>
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+      <Setting name="UserDataConnectionString" />
+      <Setting name="PostDataConnectionString" />
+      <Setting name="CommentDataConnectionString" />
+      <Setting name="SubscriptionDataConnectionString" />
+      <Setting name="NotificationDataConnectionString" />
+      <Setting name="PostReactionsDataConnectionString" />
+      <Setting name="CommentReactionsDataConnectionString" />
+      <Setting name="PostImageBlobConnectionString" />
+      <Setting name="UserImageBlobConnectionString" />
+      <Setting name="QueueDataConnectionString" />
+      <Setting name="SentMailDataConnectionString" />
+    </ConfigurationSettings>
+    <Endpoints>
+      <InputEndpoint name="Endpoint1" protocol="http" port="8080" />
+    </Endpoints>
+  </WebRole>
+  <WorkerRole name="NotificationWorkerRole" vmsize="Standard_D1_v2">
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+      <Setting name="NotificationDataConnectionString" />
+      <Setting name="CommentDataConnectionString" />
+      <Setting name="QueueDataConnectionString" />
+      <Setting name="PostDataConnectionString" />
+      <Setting name="UserDataConnectionString" />
+      <Setting name="SentMailDataConnectionString" />
+      <Setting name="AdminQueueDataConnectionString" />
+    </ConfigurationSettings>
+    <Endpoints>
+      <InputEndpoint name="NotificationService" protocol="tcp" port="8888" />
+    </Endpoints>
+  </WorkerRole>
+  <WorkerRole name="HealthMonitoringWorkerRole" vmsize="Standard_D1_v2">
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+      <Setting name="HealthCheckDataConnectionString" />
+      <Setting name="AdminQueueDataConnectionString" />
+    </ConfigurationSettings>
+  </WorkerRole>
+</ServiceDefinition>

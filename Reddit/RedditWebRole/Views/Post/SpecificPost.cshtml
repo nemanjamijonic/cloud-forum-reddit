@@ -1,0 +1,847 @@
+﻿@model Common.Models.Post
+@using Common.Models;
+
+@{ 
+   var posts = HttpContext.Current.Session["PostFromLoggedInUser"] as List<Post>; 
+}
+
+<style>
+    /* Custom CSS */
+
+    .unique-comment-container {
+        margin: 20px auto;
+        padding: 15px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        max-width: 600px;
+    }
+
+    .unique-comment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .unique-comment-username {
+        font-weight: bold;
+    }
+
+    .unique-comment-created-at {
+        font-size: 12px;
+        color: #888;
+    }
+
+    .unique-comment-description {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .unique-post-meta {
+        margin-bottom: 10px;
+    }
+
+    .unique-post-meta-item {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .unique-comment-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .unique-btn-like-comment, .unique-btn-dislike-comment, .unique-btn-delete-comment {
+        padding: 5px 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .unique-form-create-comment {
+        margin: 20px auto;
+        padding: 15px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        max-width: 600px;
+        min-width: 600px;
+        width: 600px;
+    }
+
+    .unique-form-group {
+        margin-bottom: 10px;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+    }
+
+    .unique-form-comment {
+        width: 100%;
+        max-width: 100%;
+        resize: none;
+        height: 80px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .unique-btn-submit-comment {
+        padding: 5px 15px;
+        border: none;
+        border-radius: 4px;
+        background-color: #4CAF50;
+        color: white;
+        cursor: pointer;
+    }
+
+    .unique-login-prompt {
+        text-align: center;
+        color: #666;
+        font-size: 14px;
+    }
+
+    .navbar {
+        background-color: #1a202c;
+        color: #ffffff;
+        padding: 1rem;
+    }
+
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            margin-right: 1rem;
+        }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .form-container {
+        background-color: #f7fafc;
+        padding: 2rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+    }
+
+        .form-container h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .form-container label {
+            font-weight: bold;
+            margin-top: 1rem;
+            display: block;
+        }
+
+        .form-container input,
+        .form-container textarea,
+        .form-container select {
+            width: 100%;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #cbd5e0;
+            border-radius: 0.25rem;
+        }
+
+        .form-container .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-container button {
+            margin-right: 1rem;
+        }
+
+    .btn-create-post {
+        background-color: #4a90e2;
+        color: #ffffff;
+        border: none;
+        border-radius: 0.25rem;
+        margin-left: 145px;
+        padding-top: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-create-post:hover {
+            background-color: #3182ce;
+        }
+
+    .search-form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+        .search-form .form-control {
+            margin-right: 0.5rem;
+        }
+
+        .search-form button {
+            margin-left: 0.5rem;
+        }
+
+    .sort-form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+        .sort-form .form-control {
+            margin-right: 0.5rem;
+        }
+
+        .sort-form button {
+            margin-left: 0.5rem;
+        }
+
+    .hrnas {
+        border: none;
+        border-top: 2px solid #1a202c;
+        margin: 3px 0 0 0;
+    }
+
+    .centriranje-sirina {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .centriranje {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .skrozlevo {
+        margin-left: 0;
+    }
+
+    .comment {
+        background-color: #edf2f7;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        margin-left: 2rem;
+        margin-right: 2rem;
+        border: 2px solid #8ac7db;
+        margin-bottom: 1rem;
+        position: relative;
+    }
+
+        .comment .post-meta {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+    .comment-description {
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+
+    comment-created-at {
+        text-align: center;
+        margin-top: 100px;
+    }
+
+    .comment .comment-username {
+        text-align: center;
+        margin-top: 10px;
+        position: absolute;
+        bottom: 10px;
+        right: 50%;
+        transform: translateX(50%);
+    }
+
+    .comment .comment-buttons {
+        position: absolute;
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .comment .btn-like,
+    .comment .btn-dislike {
+        background-color: #3490dc;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .comment .btn-dislike {
+        background-color: #e3342f;
+    }
+
+    .comment {
+        position: relative;
+        padding-bottom: 60px;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .create-post-card {
+        background-color: #ffffff;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        border: 2px solid #8ac7db;
+        margin-bottom: 2rem;
+        width: 500px;
+    }
+
+
+    .post-card {
+        background-color: #ffffff;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        border: 2px solid #8ac7db;
+        margin-bottom: 2rem;
+    }
+
+    .my-post-card {
+        background-color: #72A0C1;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        border: 2px solid #8ac7db;
+        margin-bottom: 2rem;
+    }
+
+    .post-card-header {
+        background-color: #edf2f7;
+        margin-left: 1rem;
+        margin-right: 1rem;
+        margin-top: 1rem;
+        padding: 1rem;
+    }
+
+    .post-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #2d3748;
+        margin-bottom: 0.5rem;
+    }
+
+    .post-description {
+        color: #4a5568;
+        line-height: 1.5;
+    }
+
+    .post-meta {
+        padding: 0.5rem;
+        background-color: #e2e8f0;
+        display: flex;
+        margin-right: 1rem;
+        margin-top: 10px;
+        margin-left: 1rem;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .post-meta-item {
+        color: #4a5568;
+        margin-right: 0.5rem;
+    }
+
+    .pomeranje {
+        margin-left: 10px;
+    }
+
+    .btn {
+        padding: 0.5rem 1rem;
+        background-color: #4a90e2;
+        color: #ffffff;
+        border: none;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn:hover {
+            background-color: #3182ce;
+        }
+
+    .form-create-comment textarea {
+        width: 100%;
+        padding: 0.5rem;
+        margin-top: 2rem;
+        border: 1px solid #cbd5e0;
+        border-radius: 0.25rem;
+    }
+
+    .form-create-comment button {
+        margin-top: 1rem;
+    }
+
+    .forma-post {
+        text-align: center;
+        height: 60px;
+        max-height: 60px;
+        min-height: 60px;
+        width: 350px;
+        max-width: 350px;
+        margin-left: auto;
+        min-width: 350px;
+    }
+
+    .forma-komentar {
+        width: 100%;
+        text-align: center;
+        height: 150px;
+        max-height: 150px;
+        max-width: 400px;
+        min-height: 150px;
+        margin-left: auto;
+        min-width: 400px;
+    }
+
+    .btn-komentar-kreiranje {
+        height: 30px;
+        width: 100px;
+        margin-left: 170px;
+        margin-bottom: 35px;
+    }
+
+    .comment-created-at {
+        margin-top: 30px;
+    }
+
+    .malo-levo {
+        margin-right: 10px;
+    }
+
+    .velicina {
+        margin-bottom: 10px;
+        padding-top: 15px;
+        width: 100px;
+        height: 50px;
+    }
+
+    .our-form-container {
+        width: 450px;
+        height: 320px;
+        justify-content: center;
+        padding-bottom: 20px;
+        margin-left: 320px;
+    }
+
+    .naslov-kreiranja-posta {
+        min-width: 350px;
+        max-width: 350px;
+        text-align: center;
+    }
+
+    .create-post-form {
+        align-items: center;
+        align-content: center;
+        background-color: #ffffff;
+        border-radius: 1rem;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        width: 500px;
+        height: 300px;
+        border: 2px solid #8ac7db;
+    }
+
+    .unique-comment-container {
+        margin: 20px auto;
+        padding: 15px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        max-width: 600px;
+    }
+
+    .unique-comment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .unique-comment-username {
+        font-weight: bold;
+    }
+
+    .unique-comment-created-at {
+        font-size: 12px;
+        color: #888;
+    }
+
+    .unique-comment-description {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .unique-post-meta {
+        margin-bottom: 10px;
+    }
+
+    .unique-post-meta-item {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .unique-comment-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .unique-btn-like-comment, .unique-btn-dislike-comment, .unique-btn-delete-comment {
+        padding: 5px 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .unique-form-create-comment {
+        margin: 20px auto;
+        padding: 15px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        max-width: 600px;
+        min-width: 600px;
+        width: 600px;
+    }
+
+    .unique-form-group {
+        margin-bottom: 10px;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+    }
+
+    .unique-form-comment {
+        width: 100%;
+        max-width: 100%;
+        resize: none;
+        height: 80px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .unique-btn-submit-comment {
+        padding: 5px 15px;
+        border: none;
+        border-radius: 4px;
+        background-color: #4CAF50;
+        color: white;
+        cursor: pointer;
+    }
+
+    .unique-login-prompt {
+        text-align: center;
+        color: #666;
+        font-size: 14px;
+    }
+
+</style>
+
+<br />
+<br />
+<br />
+<br />
+
+<div class="post-card">
+    <div class="post-card-header px-6 py-4 bg-gray-200">
+        <h2 class="post-title font-bold text-xl mb-2 centriranje">@Model.Title</h2>
+    </div>
+    <br />
+    <div class="post-card-body px-6 py-4">
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+<div class="post-image centriranje">
+    <img src="@Model.ImageUrl" alt="Post Image" style="width: 200px; height: auto; max-width: 200px; margin: 0 auto;" />
+</div>}
+        <br />
+        <p class="post-description text-gray-700 text-base centriranje">@Model.Description</p>
+        <p class="post-description text-gray-700 text-base centriranje">@Model.CreatedAt</p>
+    </div>
+    <div class="post-meta px-6 py-2 bg-gray-300 flex items-center">
+        <div class="flex items-center">
+            <span class="post-meta-item bg-gray-400 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 ce">Likes: @Model.Likes</span>
+            <span class="post-meta-item bg-gray-400 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">Dislikes: @Model.Dislikes</span>
+            <span class="post-meta-item bg-gray-400 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">Comments number: @Model.CommentsNumber</span>
+        </div>
+        <div class="flex space-x-4 ml-auto">
+            <button class="btn-like-post bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">Like</button>
+            <button class="btn-dislike-post bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md">Dislike</button>
+            <button class="btn-notification bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md"
+                    data-user-id="@HttpContext.Current.Session["LoggedInUserId"]"
+                    data-post-id="@Model.RowKey">
+                Notification
+            </button>
+
+            <a href="@Url.Action("SpecificPost", "Post", new { id = Model.RowKey })" class="btn btn-primary">View details</a>
+
+            <button class="btn-show-comments bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md" data-post-id="@Model.RowKey">Show Comments</button>
+            <button class="btn-delete-post bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md" data-post-id="@Model.RowKey" data-url="@Url.Action("DeletePost", "Post")">Delete Post</button>
+        </div>
+    </div>
+    <br />
+    <div class="post-comments hidden">
+        @foreach (var comment in Model.Comments)
+        {
+            <div class="unique-comment-container">
+                <div class="unique-comment-header">
+                    <div class="unique-comment-username">Comment by: @comment.Username</div>
+                    <div class="unique-comment-created-at">Created at: @comment.CreatedAt</div>
+                </div>
+                <div class="unique-comment-description">@comment.Description</div>
+                <div class="unique-post-meta">
+                    <span class="unique-post-meta-item bg-gray-400 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">Likes: @comment.NumberOfLikes</span>
+                    <span class="unique-post-meta-item bg-gray-400 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">Dislikes: @comment.NumberOfDislikes</span>
+                </div>
+                <div class="unique-comment-buttons">
+                    <button class="unique-btn-like-comment" data-comment-id="@comment.RowKey">Like</button>
+                    <button class="unique-btn-dislike-comment" data-comment-id="@comment.RowKey">Dislike</button>
+                    <button class="unique-btn-delete-comment bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md" data-comment-id="@comment.RowKey" data-url="@Url.Action("DeleteComment", "Post")">Delete Comment</button>
+                </div>
+            </div>
+        }
+        @if (ViewBag.LoggedInUsername != null)
+        {
+            <div class="unique-form-create-comment">
+                <form action="@Url.Action("AddComment", "Post")" method="post">
+                    <input type="hidden" name="postId" value="@Model.RowKey" />
+                    <div class="unique-form-group">
+                        <textarea name="commentText" class="unique-form-comment" placeholder="Add a comment..."></textarea>
+                        <br />
+                        <button type="submit" class="unique-btn-submit-comment">Submit</button>
+                    </div>
+                </form>
+            </div>
+        }
+        else
+        {
+            <p class="centriranje">You need to be logged in to post a comment.</p>
+        }
+    </div>
+</div>
+
+
+
+<a href="@Url.Action("Index", "Home")">Back to Posts</a>
+
+
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('.btn-show-comments').click(function () {
+                var commentContainer = $(this).closest('.post-card').find('.post-comments');
+                if (commentContainer.hasClass('hidden')) {
+                    commentContainer.removeClass('hidden');
+                } else {
+                    commentContainer.addClass('hidden');
+                }
+            });
+
+            $('.btn-delete-post').click(function () {
+                var postId = $(this).data('post-id');
+                var url = $(this).data('url');
+                var postElement = $(this).closest('.post-card');
+
+                $.ajax({
+                    url: url,
+                    type: 'post',
+                    data: { id: postId },
+                    success: function (response) {
+                        if (response.success) {
+                            postElement.remove();
+                            location.reload();
+                        } else {
+                            alert('Error deleting post');
+                        }
+                    },
+                    error: function () {
+                        alert('Error deleting post');
+                    }
+                });
+            });
+
+            $('.unique-btn-delete-comment').click(function () {
+                var commentId = $(this).data('comment-id');
+                var url = $(this).data('url');
+                var commentElement = $(this).closest('.comment');
+
+                $.ajax({
+                    url: url,
+                    type: 'post',
+                    data: { commentId: commentId },
+                    success: function (response) {
+                        if (response.success) {
+                            commentElement.remove();
+                            location.reload();
+                        } else {
+                            alert('Error deleting comment');
+                        }
+                    },
+                    error: function () {
+                        alert('Error deleting comment');
+                    }
+                });
+            });
+
+            $('.btn-like-post').click(function () {
+                var postId = $(this).closest('.post-card').find('.btn-show-comments').data('post-id');
+                var url = '@Url.Action("LikePost", "Post")';
+                var postElement = $(this).closest('.post-card');
+                var usernameOfLoggedIn = '@ViewBag.LoggedInUsername';
+                $.ajax({
+                    url: url,
+                    type: 'post',
+                    data: {
+                        postId: postId,
+                        username: usernameOfLoggedIn
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            location.reload();
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function () {
+                        alert('Error liking post');
+                    }
+                });
+            });
+
+            $('.btn-dislike-post').click(function () {
+                var postId = $(this).closest('.post-card').find('.btn-show-comments').data('post-id');
+                var url = '@Url.Action("DislikePost", "Post")';
+                var postElement = $(this).closest('.post-card');
+                var usernameOfLoggedIn = '@ViewBag.LoggedInUsername';
+                $.ajax({
+                    url: url,
+                    type: 'post',
+                    data: {
+                        postId: postId,
+                        username: usernameOfLoggedIn
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            location.reload();
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function () {
+                        alert('Error disliking post');
+                    }
+                });
+            });
+
+
+            $('.unique-btn-like-comment').click(function () {
+                var commentId = $(this).data('comment-id');
+                var url = '@Url.Action("LikeComment", "Post")';
+                var usernameOfLoggedIn = '@ViewBag.LoggedInUsername';
+
+                $.ajax({
+                    url: url,
+                    type: 'post',
+                    data: {
+                        commentId: commentId,
+                        username: usernameOfLoggedIn
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            location.reload();
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function () {
+                        alert('Error liking comment');
+                    }
+                });
+            });
+
+            $('.unique-btn-dislike-comment').click(function () {
+                var commentId = $(this).data('comment-id');
+                var url = '@Url.Action("DislikeComment", "Post")';
+                var usernameOfLoggedIn = '@ViewBag.LoggedInUsername';
+
+                $.ajax({
+                    url: url,
+                    type: 'post',
+                    data: {
+                        commentId: commentId,
+                        username: usernameOfLoggedIn
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            location.reload();
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function () {
+                        alert('Error disliking comment');
+                    }
+                });
+            });
+
+
+            $('.btn-notification').on('click', function (e) {
+                e.preventDefault();
+                var userId = $(this).data('user-id');
+                var postId = $(this).data('post-id');
+                var url = '@Url.Action("ManageNotifications", "Notification")';
+
+                console.log('User ID:', userId);
+                console.log('Post ID:', postId);
+                console.log('URL:', url);
+
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: { userId: userId, postId: postId },
+                    success: function (response) {
+                        alert('Notification toggled successfully!');
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error status:', status);
+                        console.error('Error details:', error);
+                        alert('An error occurred while toggling the notification.');
+                    }
+                });
+            });
+
+            // Toggle comment form
+            function toggleCommentForm(postId) {
+                var commentForm = $('#comment-form-' + postId);
+                commentForm.slideToggle();
+            }
+        });
+    </script>
+}

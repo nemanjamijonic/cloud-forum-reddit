@@ -1,0 +1,85 @@
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio files
+*.suo
+*.user
+*.sln.docstates
+
+# Resharper cache files
+_ReSharper*/
+
+# Visual Studio 2017/2019 cache and settings
+.vs/
+.vscode/
+
+# NCrunch
+_NC.*
+
+# ReSharper
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Test files
+*.testsettings
+*.runsettings
+[Dd]ata/
+*.xml
+
+# TFS
+[Tt]eam[Ss]ystem/
+
+# Microsoft Azure Build Output
+csx/
+*.build.csdef
+
+# Microsoft Azure Emulator
+ecf/
+rcf/
+
+# Windows Store app package directories and files
+AppPackages/
+BundleArtifacts/
+Package.StoreAssociation.xml
+_pkginfo.txt
+
+# Windows IoT
+AppxPackages/
+
+# Others
+*.Cache
+ClientBin/
+[Ss]tyle[Cc]op.*
+~$*
+*.dbmdl
+*.dbproj.schemaview
+*.jfm
+*.pfx
+*.publishsettings
+node_modules/
+orleans.codegen.cs
+TestResults/
+_Pvt_Extensions/
+*.cspkg
+*.csx
+*.dotCover
+*.dotSettings
+*.launchsettings
+*.pubxml
+*.vcxproj.filters
+*.vcxproj.user
+*.vsmdi
+*.vspscc
+*.vssscc
