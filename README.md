@@ -22,6 +22,8 @@ This architecture ensures a reliable and scalable forum application with real-ti
 
 ## Architecture
 
+![Reddit](https://github.com/user-attachments/assets/9aaee978-e07a-4c9a-804e-5139808a5c14)
+
 ## Participants
 
 - **Filip Bogdanović PR126/2020** - [Cofi21]
