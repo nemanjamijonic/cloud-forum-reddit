@@ -14,15 +14,17 @@ The **Reddit** project is an **Azure Cloud Service** solution developed in Visua
 
 - **HealthStatusWebRole**: A web role providing a visual application for monitoring the status of services such as Reddit and Notification services.
 
-- **NotificationWorkerRole**: A worker role that reads from the Azure Cloud Queue and sends notifications to post owners when their posts are commented on. It also sends email alerts to administrators when any service fails.
+- **NotificationWorkerRole**: A worker role that reads from the **Azure Cloud Queue** to send notifications to post owners when their posts are commented on. It also sends email alerts to administrators when any service fails.
 
 - **RedditWebRole**: The core web role responsible for the main functionality of the Reddit-like forum system. It supports post creation, commenting, upvoting, downvoting, user login, registration, and profile management.
 
+### Azure Cloud Services
+
+- **Azure Cloud Queue**: Used for storing IDs to notify users when comments are made on their posts and to alert administrators when any service is not functioning.
+- **Azure Cloud Table**: Used for storing all application data, including user information, posts, comments, and service health statuses.
+- **Azure Cloud Blob**: Used for storing images associated with posts and user profile pictures.
+
 This architecture ensures a reliable and scalable forum application with real-time monitoring and notifications.
-
-## Architecture
-
-![Reddit](https://github.com/user-attachments/assets/9aaee978-e07a-4c9a-804e-5139808a5c14)
 
 ## Participants
 
